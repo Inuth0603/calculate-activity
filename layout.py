@@ -135,7 +135,14 @@ class CalcLayout:
 # Toolbar
         self._toolbar_box = ToolbarBox()
         
-        activity_button = ActivityToolbarButton(self._parent)
+        # Pass the activity icon explicitly (works around a GTK4 toolkit issue where it defaults to activity-journal)
+        icon_name = "activity-calculate"
+        if hasattr(self._parent, 'metadata') and self._parent.metadata:
+            icon_name = self._parent.metadata.get('icon', 'activity-calculate')
+            if icon_name == 'calculate':
+                icon_name = 'activity-calculate'
+        
+        activity_button = ActivityToolbarButton(self._parent, icon_name=icon_name)
         self._toolbar_box.get_toolbar().append(activity_button)
 
         def append_toolbar(icon_name, label, page):

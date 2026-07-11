@@ -34,8 +34,6 @@ class IconToolButton(ToolButton):
 
     def __init__(self, icon_name, text, cb, help_cb=None, alt_html=''):
         ToolButton.__init__(self)
-        self.add_css_class("calc-button")
-        self.add_css_class("calc-operator-btn")
 
         if _icon_exists(icon_name):
             self.props.icon_name = icon_name
@@ -67,8 +65,6 @@ class IconToggleToolButton(ToggleToolButton):
 
     def __init__(self, items, cb, desc):
         ToggleToolButton.__init__(self)
-        self.add_css_class("calc-button")
-        self.add_css_class("calc-operator-btn")
         self.items = items
         if 'icon' in items[0] and _icon_exists(items[0]['icon']):
             self.props.icon_name = items[0]['icon']
@@ -100,8 +96,6 @@ class TextToggleToolButton(Gtk.ToggleButton):
 
     def __init__(self, items, cb, desc, index=False):
         Gtk.ToggleButton.__init__(self)
-        self.add_css_class("calc-button")
-        self.add_css_class("calc-operator-btn")
         self.items = items
         self.set_label(items[0])
         self.selected = 0

@@ -30,6 +30,7 @@ gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk
 from gi.repository import Gdk
 import base64
+import os
 
 import sugar4.profile
 from sugar4.graphics.xocolor import XoColor
@@ -421,6 +422,17 @@ class Calculate(ShareableActivity):
         self.add_controller(self._key_controller)
         
         self.color = sugar4.profile.get_color()
+
+        # Load activity-specific CSS
+        css_provider = Gtk.CssProvider()
+        css_path = os.path.join(os.environ.get("SUGAR_BUNDLE_PATH", os.getcwd()), "activity.css")
+        if os.path.exists(css_path):
+            css_provider.load_from_path(css_path)
+            Gtk.StyleContext.add_provider_for_display(
+                Gdk.Display.get_default(),
+                css_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            )
 
         self.layout = CalcLayout(self)
         self.label_entry = self.layout.label_entry
